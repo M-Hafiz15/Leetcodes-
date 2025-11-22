@@ -1,18 +1,29 @@
-bool isPalindrome(char *s) {
-    int i = 0, j = strlen(s) - 1;
-    while (i < j) {
-        if (s[i] != s[j]) return false;
-        i++;
-        j--;
-    }
-    return true;
+bool isVowel(char c) {
+    c = tolower(c);
+    return c=='a' || c=='e' || c=='i' || c=='o' || c=='u';
 }
 
-char* firstPalindrome(char** words, int wordsSize){
-    for (int i = 0; i < wordsSize; i++) {
-        if (isPalindrome(words[i])) {
-            return words[i];  
+char* reverseVowels(char* s) {
+    int left = 0;
+    int right = strlen(s) - 1;
+
+    while (left < right) {
+
+        while (left < right && !isVowel(s[left]))
+            left++;
+
+        while (left < right && !isVowel(s[right]))
+            right--;
+
+        if (left < right) {
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+
+            left++;
+            right--;
         }
     }
-    return "";
+
+    return s;
 }
